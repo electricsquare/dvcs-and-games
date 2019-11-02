@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>A crash course on chip design</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<section>
+	<h2>Asset Management, Games and Git</h2>
+	<h3>Tom Read Cutting</h3>
+	</aside>
+</section>
+<section>
+	<h3>Goals of this Talk</h3>
+	<ul>
+		<li>What problems do VCS solve?</li>
+		<li>What are the benefits of Helix (Perforce)?</li>
+		<li>What are the benefits of Git?</li>
+		<li>What are the trade-offs of each model?</li>
+		<li>Would we want to use Git for games?</li>
+	</ul>
+	<aside class="notes">
+		This is a weird talk, it's meant to inspire discussion and thought more than anything else.
+
+		Some of you may or may not be aware of what Git is. I really hope you know what Perforce is by now.
+
+		"Git" is a source control management system that has become incredibly popular for a wide variety of reasons in
+		recent years. Some of these reasons are good, and while it's my personal preferred versioning system of choice
+		for personal projects, there are very good reasons why even though most tech companies now use Git, the games
+		industry still mostly uses traditional systems like Perforce. However, there are a few signs to indicate that
+		this might start changing, as tools are being developed to solve the problems that Git introduces. However,
+		these solutions naturally come with their own problems, especially in terms of their complexity.
+
+		So part of the goal of this talk is to really start a discussion about whether or not this complexity is worth it,
+		but in order to have the discussion, we need to understand the chain of problems and solutions that got us here.
+		So this will by the nature of the audience in this room, explain how Git works.
+
+		Also, I'm trying purely to focus on the trade-offs made by the model that each system uses. At a mid-level.
+		So, not talking about centralised vs distributed centrally. This is about the models that Git and Perforce use
+		<em>specifically</em>. But I'm not going to focus on things like UI or other implementation details.
+	</aside>
+</section>
+<section>
+	<h3>Content of this talk</h3>
+	<ol>
+		<li>Helix (Perforce)</li>
+		<li>Git</li>
+		<li>Git LFS</li>
+		<li>Q&A and Discussion</li>
+	</ol>
+	<aside class="notes">This is the order of topics we will discuss.</aside>
+</section>
+<section>
+	<section>
+		<h3>Helix (Perforce)</h3>
+		<ul>
+			<li>Centralised</li>
+			<li>Have to "check" files "out"</li>
+			<li>File modifications grouped into changelists&#42;</li>
+			<li>If no one else has edited those files can "check in"</li>
+			<li>Centralised server keeps revisions of every file in terms of these changelist changes&#42;</li>
+		</ul>
+		<aside class="notes">
+			I will keep this brief, as I hope you know that basics of it. I'm also trying not to be too specific in how perforce works, the central theme is that Perforce uses a centralised model, and most of the things listed follow from that.
+
+			Asterisk thing is kind of perforce specific
+		</aside>
+	</section>
+	<section>
+		<h3>Consequences of Perforce's Model</h3>
+		<ul>
+			<li>Project history tracked in one place</li>
+			<li>Central system knows who is working on which file&#42;</li>
+			<li>Software needs Perforce integration&#42;</li>
+			<li>Can't work when offline</li>
+			<li>Branches are expensive</li>
+		</ul>
+		<aside class="notes">
+			Asterisk is perforce-specific, and not always true (can make files readonly).
+
+			None of these are good/bad per-se, but can have positive and negative properties.
+		</aside>
+	</section>
+</section>
+
+<!-- Explain Git -->
+
+<section>
+	<section>
+		<h3>What is Git?</h3>
+			<p>Git is a <strong>Source</strong> Control Management system</p>
+			<p>Developed by Linus Torvalds because he couldn't find a version control system that was:</p>
+			<ul>
+				<li>Distributed</li>
+				<li>Performant</li>
+				<li>Secure</li>
+			</ul>
+		<aside class="notes">The Source is important, as it was designed for managing code.</aside>
+	</section>
+	<section>
+		<h3>Distributed</h3>
+	</section>
+</section>
+
+<!-- Now cover tradeoffs of Git -->
+
+<section>
+	<section>
+		<h3>Git</h3>
+	</section>
+</section>
+
+<!-- <section>
+	<h3>What problem are we trying to solve?</h3>
+	<p>There is a class of software that we like to put into the same bucket, obstenisbly because they "solve" the same problems.</p>
+	<p>Examples include Helix (Perforce), Subversion, Mercurial and Git.</p>
+	<p>So, what problems do they solve?</p>
+	<p>Are the they actually same problems?</p>
+</section>
+<section>
+	<h3>Version Control: The Problem</h3>
+	<p>If you didn't have a version control system, what problems would you face trying to develop a project as a team, and how would you solve them?</p>
+	<p>I will be talking purely about "code" as this is what VCS systems were originally designed for. Art and other assets will be covered later.</p>
+</section>
+<section>
+	<h3>Sharing a code base</h3>
+	<p>How can we share a code base amongst a team?</p>
+	<p>Upload and download source files to/from a file share.</p>
+</section>
+<section>
+	<h3>Managing lost data</h3>
+	<p>This needs to be done.</p>
+</section>
+<section>
+	<h3>Subversion, Helix</h3>
+	<p>If you look at the problem of code/asset sharing first, and then the problem of versioning later, the "centralised" model makes a lot of sense.</p>
+</section>
+
+<section>
+
+</section> -->
+
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
