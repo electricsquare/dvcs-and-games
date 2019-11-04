@@ -115,9 +115,29 @@
 				<li>Secure</li>
 			</ul>
 		<aside class="notes">The Source is important, as it was designed for managing code.</aside>
+		TODO: Good Source https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F 
 	</section>
+
 	<section>
-		<h3>Distributed</h3>
+		<h3>The Workspace</h3>
+		<p>TODO: Start with workspace, locally</p>
+	</section>
+
+	<section>
+		<h3>A Commit</h3>
+		<p>Explain you want lightweight revisions of your code, so take hash of working directory + hash of previous revision</p>
+		TODO: Diagram
+	</section>
+
+	<section>
+		<h3>A Branch</h3>
+		<p>Explain that a branch is just really simple</p>
+		TODO: Diagram
+	</section>
+
+	<section>
+		<h3>Merging</h3>
+		<p>3 way merge </p>
 	</section>
 </section>
 
@@ -127,6 +147,56 @@
 	<section>
 		<h3>Git</h3>
 	</section>
+
+	<section>
+		<h3>Performance: NOT "The same thing but faster"</h3>
+		<p>This is a point that Linus Torvalds stresses when talking about Git, especially with regards to branching.</p>
+		<p>Cheap and fast branches change the way you use them completely.</p>
+
+		<aside class="notes">
+			So imagine hypothetically you are working on a bunch of changes, and they start getting a bit bigger than you thought they would. 
+
+			So, you think "maybe I should create a stream at this point".
+
+			So, what does this involve?
+			<ol>
+				<li>You go to server GUI to make a stream</li>
+				<li>Get drop down options for different kinds of stream, you hope you pick the right one</li>
+				<li>You try to switch stream, but perforce shouts at you about having files checked-out</li>
+				<li>You start to shelve the files, but then realise you will get weird merge-conflicts if you do that...</li>
+				<li>So you get latest on the current branch, spend some time resolving the changes</li>
+				<li>Delete currently shelved files, re-shelve just in case</li>
+				<li>Also, don't forget to make sure everything you want to work on in the new stream is in the right changelist!</li>
+				<li>Switch streams, "populate" the stream whatever that means, wait for server to finish (again)...</li>
+				<li>Revert files</li>
+				<li>Try to unshelve files</li>
+				<li>Have to pick the right mapping, the default doesn't work sometimes for some reason, work-out what the right value is to set...</li>
+				<li>Unshelve fails, because when you reverted your changes, you forgot to delete the new files you made</li>
+				<li>Reconsile offline work</li>
+				<li>Delete files</li>
+				<li>Reconsile again just in case</li>
+				<li>Unshelve</li>
+				<li>Safe automatic merge resolve</li>
+				<li>Breathe</li>
+			</ol>
+
+			So remember when you create a branch in git, all it needs to know about that branch is which the hash of the latest commit, it can leave your workspace and index as-is, just checks-out that a new branch.
+
+			All it does is create 6 bytes locally.
+		</aside>
+	</section>
+</section>
+
+<section>
+	<h3>Recommended Resources</h3>
+	<ul>
+		<li><a href="https://git-scm.com/" class="">https://git-scm.com/</a></li>
+		<li><a href="https://blog.thoughtram.io/git/2014/11/18/the-anatomy-of-a-git-commit.html">https://blog.thoughtram.io/git/2014/11/18/the-anatomy-of-a-git-commit.html</a></li>
+		<li><a href="https://hackersatcambridge.com/workshops/intro-to-git" class="">https://hackersatcambridge.com/workshops/intro-to-git</a></li>
+		<li><a href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a></li>
+		<li><a href="http://ndpsoftware.com/git-cheatsheet.html#loc=stash">http://ndpsoftware.com/git-cheatsheet.html#loc=stash</a></li>
+		<li><a href="https://www.gitkraken.com/">https://www.gitkraken.com/</a></li>
+	</ul>
 </section>
 
 <!-- <section>
