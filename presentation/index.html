@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>A crash course on chip design</title>
+		<title>DVCS, Games and Git</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/league.css">
@@ -25,7 +25,7 @@
 		<div class="reveal">
 			<div class="slides">
 <section>
-	<h2>Asset Management, Games and Git</h2>
+	<h2>DVCS, Games and Git</h2>
 	<h3>Tom Read Cutting</h3>
 	</aside>
 </section>
@@ -73,11 +73,11 @@
 	<section>
 		<h3>Helix (Perforce)</h3>
 		<ul>
-			<li>Centralised</li>
+			<li>Centralized</li>
 			<li>Have to "check" files "out"</li>
 			<li>File modifications grouped into changelists&#42;</li>
 			<li>If no one else has edited those files can "check in"</li>
-			<li>Centralised server keeps revisions of every file in terms of these changelist changes&#42;</li>
+			<li>Centralized server keeps revisions of every file in terms of these changelist changes&#42;</li>
 		</ul>
 		<aside class="notes">
 			I will keep this brief, as I hope you know that basics of it. I'm also trying not to be too specific in how perforce works, the central theme is that Perforce uses a centralised model, and most of the things listed follow from that.
@@ -114,30 +114,112 @@
 				<li>Performant</li>
 				<li>Secure</li>
 			</ul>
+			<p>So how does it work?</p>
 		<aside class="notes">The Source is important, as it was designed for managing code.</aside>
-		TODO: Good Source https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F 
+		<!-- TODO: Good Source https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F  -->
 	</section>
 
 	<section>
-		<h3>The Workspace</h3>
-		<p>TODO: Start with workspace, locally</p>
+		<h3>Centralized VCS</h3>
+		<img src="img/centralized.png" alt="Diagram of Centralized version control">
+		<!-- <p>Without version control all you have is a workspace. Your project in the state it would be if it was just edited and update in a file-system as-is.</p>
+		<p>What problems would you face working in such an environment?</p> -->
 	</section>
 
 	<section>
-		<h3>A Commit</h3>
-		<p>Explain you want lightweight revisions of your code, so take hash of working directory + hash of previous revision</p>
-		TODO: Diagram
+		<h3>Distributed VCS</h3>
+		<img src="img/distributed.png" alt="Diagram of Distributed version control" width="400px">
+		<!-- <p>Without version control all you have is a workspace. Your project in the state it would be if it was just edited and update in a file-system as-is.</p>
+		<p>What problems would you face working in such an environment?</p> -->
+		<aside class="notes">
+			Normally the hardest bit to grasp about Git, but it's good to show you the end-goal, and work towards it from there.
+		</aside>
 	</section>
 
 	<section>
-		<h3>A Branch</h3>
-		<p>Explain that a branch is just really simple</p>
-		TODO: Diagram
+		<h3>Local Version Control</h3>
+		<p>You want to be able to keep track of logical changes to your code locally, and be secure that those changes you put in are the changes that come out.</p>
+		<img src="img/local.png" alt="Diagram of Local Version Control" width="300px">
 	</section>
 
 	<section>
-		<h3>Merging</h3>
-		<p>3 way merge </p>
+		<h3>Guaranteeing Security</h3>
+		<p>Hash Everything!</p>
+		<p>Side Benefit: Content Addressable Data.</p>
+		<p>This is <em>fundamental</em> to how Git works.</p>
+		<p>Cannot modify history!</p>
+
+		<aside class="notes">
+			What is hashed?
+			Git Author, Time of Commit, Commit Message, the snapshot of the working directory at the time of modification, and the hashes of any parent commits.
+		</aside>
+	</section>
+
+	<section>
+		<h3>A commit is <em>just</em> a hash</h3>
+		<img src="img/data-model-3.png" width="400px" alt="Diagram of Git's Hashing Model">
+	</section>
+
+	<section>
+		<h3>Branching?</h3>
+		<p>A branch is <em>just</em> a file containing a single hash value</p>
+		<img src="img/advance-master.png" alt="Diagram of branching" width="500px">
+		<p>Super-Duper cheap!</p>
+	</section>
+
+	<section>
+		<h3>Merging?</h3>
+		<p>Find most recent common commit of two branches, take the content of everything at that point-in-time and do a three-way merge.</p>
+		<p>A merge commit is the same as any-other, it just has two parent commits instead of one.</p>
+		<p>Git is <em>good</em> at merging.</p>
+		<aside class="notes">Some people have gone to extreme lengths to use Git on projects where they are forced to use other vcs systems. Like locally using Git and then manually merging their changes into a subversion repo.</aside>
+	</section>
+
+	<section>
+		<h3>Implementation?</h3>
+		<p>All of this data is simply stored in a `.git` at the root of your workspace, that is an <em>entire</em> Git repository.</p>
+	</section>
+
+	<section>
+		<h3>Collaboration?</h3>
+		<p>Other people simply have their own git repositories that they commit data to, sharing code is simply a matter of merging each-other's branches.</p>
+	</section>
+
+	<section>
+		<h3>Remotes</h3>
+		<p>The concept of a "central" server is extremely useful, especially for collaboration.</p>
+		<p><em>But</em> it is nothing special, just another Git repo.</p>
+		<p>You can merge changes down from it into your branches by <em>pulling</em>.</p>
+		<p>You can apply your changes onto it's branches by <em>pushing</em>.</p>
+	</section>
+
+	<section>
+		<h3>Remotes (cont.)</h3>
+		<p>A remote is simply a URI with a name, by default when you <em>clone</em> a remote your repository will be configured to have remote named <em>origin</em> which points to it.</p>
+	</section>
+
+	<section>
+		<h3>Merging from a remote</h3>
+		<p>Git just stores content of remote branches on your PC when you fetch like any other, can merge them into your branches like you would any other.</p>
+		<img src="img/remote-branches-3.png" alt="Showing Fetching from a Remote" width="500px">
+	</section>
+
+	<section>
+		<h3>Workflow</h3>
+		<p>Git has the concept of something called "the index", a way of <em>staging</em> your changes before committing them to your branch history.</p>
+		<img src="img/areas.png" alt="Image of git staging areas" width="400px">
+		<p>Once you are happy with what you have staged you can <em>commit</em> everything to your repository.</p>
+	</section>
+
+	<section>
+		<h3>Next Step...</h3>
+		<p>Git in a nutshell, many things not covered... Resources at end of slide deck!</p>
+		<ol>
+			<li>Git GUIs</li>
+			<li>The Git Book!</li>
+			<li>How to write a <em>good</em> commit message...</li>
+			<li>Tutorials and more!</li>
+		</ol>
 	</section>
 </section>
 
@@ -185,18 +267,87 @@
 			All it does is create 6 bytes locally.
 		</aside>
 	</section>
+
+	<section>
+		<h3>Branch and Merge, Early and Often</h3>
+		<p>You can only merge files once committed! If you mess-up the merge there is no way of losing the un-merged data as it's all hashed and verified in the Git history!</p>
+		<p>It does completely change the way you work.</p>
+	</section>
+
+	<section>
+		<h3>Git is awesome right???</h3>
+		<p>It is, for text files...</p>
+		<p>Not for binary files... 😔</p>
+	</section>
+
+	<section>
+		<h3>The costs of binary in Git</h3>
+		<ul>
+			<li>Entire history on each "client"</li>
+			<li>Hard to diff</li>
+			<li>No ability to lock files</li>
+			<li>Good luck merging them...</li>
+		</ul>
+	</section>
+</section>
+
+<section>
+	<section>
+	<h3>Git LFS</h3>
+	<img src="img/git-lfs.png" alt="Diagram of Git LFS">
+	</section>
+
+	<section>
+		<h3>Binary Files Stored on Central Server</h3>
+		<p>Git Repository just contains files with indices to these files.</p>
+		<p>Various hooks and filters automatically replace these with the actual files when you check anything out...</p>
+		<p>And commit hooks automatically do the inverse when you commit...</p>
+	</section>
+
+	<section>
+		<h3>Gains and losses</h3>
+		<p>Binary data has all positives and negatives of Centralized VCS (can lock!).</p>
+		<p>Code has <em>many</em> of the benefits of DVCS.</p>
+		<p>There are also other things I personally prefer that Git does unrelated to it being decentralized (don't have to check-out files).</p>
+	</section>
+</section>
+
+<section>
+	<h3>Is Git the Future in Games?</h3>
+	<p>Things seem to be trending that way, but three big challenges remain...</p>
+	<ul>
+		<li>Useability</li>
+		<li>Scalability</li>
+		<li>Maturity</li>
+	</ul>
 </section>
 
 <section>
 	<h3>Recommended Resources</h3>
 	<ul>
-		<li><a href="https://git-scm.com/" class="">https://git-scm.com/</a></li>
-		<li><a href="https://blog.thoughtram.io/git/2014/11/18/the-anatomy-of-a-git-commit.html">https://blog.thoughtram.io/git/2014/11/18/the-anatomy-of-a-git-commit.html</a></li>
-		<li><a href="https://hackersatcambridge.com/workshops/intro-to-git" class="">https://hackersatcambridge.com/workshops/intro-to-git</a></li>
-		<li><a href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a></li>
-		<li><a href="http://ndpsoftware.com/git-cheatsheet.html#loc=stash">http://ndpsoftware.com/git-cheatsheet.html#loc=stash</a></li>
-		<li><a href="https://www.gitkraken.com/">https://www.gitkraken.com/</a></li>
+		<li><a href="https://git-scm.com/" class="">Official Git Website</a></li>
+		<li><a href="https://git-scm.com/book/en/v2">The Git Book</a></li>
+		<li><a href="https://git-lfs.github.com/">Git LFS</a></li>
+		<li><a href="https://chris.beams.io/posts/git-commit/">How to write a Git Commit</a></li>
+		<li><a href="https://hackersatcambridge.com/workshops/intro-to-git" class="">Intro To Git workshop</a></li>
+		<li><a href="https://learngitbranching.js.org/">Learn Branching in Git</a></li>
+		<li><a href="http://ndpsoftware.com/git-cheatsheet.html#loc=stash">Git Command CheatSheet</a></li>
+		<li><a href="https://www.gitkraken.com/">Git Kraken - a GUI around Git</a></li>
 	</ul>
+</section>
+
+<section>
+	<h3>Special Thanks</h3>
+	<p>Huw Bowles for organizing the reading group and AJ Weeks for providing valuable feedback.</p>
+</section>
+
+<section>
+	<h1>Any Questions?</h1>
+</section>
+
+<section>
+	<h3>Image Sources</h3>
+	<p>Diagrams and images were sources from https://git-scm.com/book/en/v2 (CC BY-NC-SA 3.0) and https://git-lfs.github.com/ (MIT License)</p>
 </section>
 
 <!-- <section>
@@ -228,6 +379,11 @@
 <section>
 
 </section> -->
+
+<!--
+Image Sources:
+https://git-scm.com/book/en/v2 (CC BY-NC-SA 3.0)
+-->
 
 
 			</div>
