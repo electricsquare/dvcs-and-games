@@ -6,9 +6,11 @@ Brought to you by [Electric Square](https://www.electricsquare.com/) and [Reacto
 
 Created and Presented by [Tom Read Cutting](https://moosichu.com).
 
-# [Presentation](https://electricsquare.github.io/dvcs-and-games)
-
 <a href="https://www.youtube.com/watch?feature=player_embedded&v=p3DL-R0Zw1c" target="_blank"><img src="https://img.youtube.com/vi/p3DL-R0Zw1c/0.jpg" alt="Distributed Version Control Systems, Games and Git Presentation Video" width="240" height="180" /></a>
+
+
+[Slides](https://electricsquare.github.io/dvcs-and-games)
+
 
 Even though they solve similar problems, Distributed Version Control Systems (DVCS) like Git use a fundamentally different model for managing source code compared to Centralised Version Control Systems we are familiar with in the games industry such as Helix (Perforce). However, many of their advantages in usability, simplicity and robustness have allowed them to dominate the software industry over the last 10 years with one notable exception: the games industry. This talk explains the model Git uses for managing source code, to give a grounded understanding for interacting with it through any interface. The goal will be for everyone to understand why Git has becomes so popular, in addition to the barriers it still faces in being adopted into the games industry.
 
