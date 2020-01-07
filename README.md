@@ -6,7 +6,7 @@ Brought to you by [Electric Square](https://www.electricsquare.com/) and [Reacto
 
 Created and Presented by [Tom Read Cutting](https://moosichu.com).
 
-<a href="https://www.youtube.com/watch?feature=player_embedded&v=p3DL-R0Zw1c" target="_blank"><img src="https://img.youtube.com/vi/p3DL-R0Zw1c/0.jpg" alt="Distributed Version Control Systems, Games and Git Presentation Video" width="240" height="180" /></a>
+<a href="https://www.youtube.com/watch?feature=player_embedded&v=-FBal4PAr4E" target="_blank"><img src="https://img.youtube.com/vi/-FBal4PAr4E/0.jpg" alt="Distributed Version Control Systems, Games and Git Presentation Video" width="240" height="180" /></a>
 
 
 [Slides](https://electricsquare.github.io/dvcs-and-games)
